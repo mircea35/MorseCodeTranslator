@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -46,6 +47,10 @@ class MorseCodeTranslator{
 
         return morse;
     }
+
+    //public string TranslateToText(string text){
+
+    //}
 }
 
 
@@ -81,6 +86,11 @@ internal class Program {
                     string userInput = Console.ReadLine();
                     string translatedText = translator.TranslateToMorse(userInput);
                     Console.WriteLine(translatedText);
+
+                    using (StreamWriter outputFile = new StreamWriter("logs.txt"))
+                    {
+                        outputFile.WriteLine("Text: " + userInput + "\n Morse: " + translatedText);
+                    }
                     break;
             }
         }
