@@ -85,6 +85,7 @@ internal class Program {
             Console.WriteLine("Choose from the following: ");
             Console.WriteLine("1. Encoding to morse code.");
             Console.WriteLine("2. Decoding from morse code.");
+            Console.WriteLine("3. Quit.");
             Console.WriteLine("Input: ");
             int userChoice = Int32.Parse(Console.ReadLine());
             switch(userChoice){
@@ -130,8 +131,15 @@ internal class Program {
                     translatedText = translator.TranslateToText(userInput);
                     Console.WriteLine(translatedText);
                     
-                    Console.WriteLine("Morse: " + userInput + "\n Text: " + translatedText);
+                    using (StreamWriter outputFile = new StreamWriter("logs.txt"))
+                    {
+                        outputFile.WriteLine("Morse: " + userInput + "\n Text: " + translatedText);
+                    }
 
+                    break;
+                
+                default:
+                    keepAlive = false;
                     break;
             }
         }
