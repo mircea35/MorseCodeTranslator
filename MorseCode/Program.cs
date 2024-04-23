@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-internal class Program { 
-    static Dictionary<String, String> translationSet = new Dictionary<String, String>();
+class MorseCodeTranslator{
+    Dictionary<String, String> translationSet = new Dictionary<String, String>();
+    
+    public MorseCodeTranslator(string path)
+    {
+        LoadMorseCode(path);
+    }
 
-    static void importTranslationSet(int standard){
-        string path = "";
-        if(standard == 1){
-            path = @"TranslationSets/international.txt";
-        }else{
-            path = @"TranslationSets/american.txt";
-        }
+    private void LoadMorseCode(string path){
         try{
             foreach(String line in File.ReadLines(path)){
                 if(String.IsNullOrEmpty(line) || line.StartsWith("#")){
@@ -29,28 +28,33 @@ internal class Program {
         }
     }
 
-    static void translateToMorse(string text){
+    public string TranslateToMorse(string text){
         text = text.ToUpper();
         char[] characters = new char[text.Length];
         string morse = "";
         for(int i = 0; i < text.Length; i++){
-            characters[i] = text[i];
+             characters[i] = text[i];
         }
 
         foreach(char c in characters){
-           if(translationSet.ContainsKey(c.ToString())){
-                morse += translationSet[c.ToString()] + " ";
-           }else{
-                morse +="|";
-           }
+            if(translationSet.ContainsKey(c.ToString())){
+                    morse += translationSet[c.ToString()] + " ";
+            }else{
+                    morse +="|";
+            }
         }
 
-        Console.WriteLine(morse);
+        return morse;
     }
+}
+
+
+internal class Program { 
 
     static public void Main(String[] args) 
     { 
         bool keepAlive = true;
+        string path = "";
         while(keepAlive){
             Console.WriteLine("=== Morse Code Translator ===");
             Console.WriteLine("Main Menu");
@@ -66,10 +70,17 @@ internal class Program {
                     Console.WriteLine("2. American.");
                     Console.WriteLine("Input: ");
                     userChoice = Int32.Parse(Console.ReadLine());
-                    importTranslationSet(userChoice);
+
+                    if(userChoice == 1){
+                        path = @"TranslationSets/international.txt";
+                    }else{
+                        path = @"TranslationSets/american.txt";
+                    }
+                    MorseCodeTranslator translator = new MorseCodeTranslator(path);
                     Console.WriteLine("Input the line: ");
                     string userInput = Console.ReadLine();
-                    translateToMorse(userInput);
+                    string translatedText = translator.TranslateToMorse(userInput);
+                    Console.WriteLine(translatedText);
                     break;
             }
         }
