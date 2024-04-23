@@ -31,6 +31,7 @@ internal class Program {
     }
 
     static void translateToMorse(string text){
+        text = text.ToUpper();
         char[] characters = new char[text.Length];
 
         for(int i = 0; i < text.Length; i++){
