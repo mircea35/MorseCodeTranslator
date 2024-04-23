@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 
 internal class Program { 
     static Dictionary<String, String> translationSet = new Dictionary<String, String>();
-    static List<string> morseCode = new List<string>();
 
     static void importTranslationSet(int standard){
         string path = "";
@@ -33,24 +32,20 @@ internal class Program {
     static void translateToMorse(string text){
         text = text.ToUpper();
         char[] characters = new char[text.Length];
-
+        string morse = "";
         for(int i = 0; i < text.Length; i++){
             characters[i] = text[i];
         }
 
         foreach(char c in characters){
            if(translationSet.ContainsKey(c.ToString())){
-                morseCode.Add(translationSet[c.ToString()]);
-                morseCode.Add(" ");
+                morse += translationSet[c.ToString()] + " ";
            }else{
-                morseCode.Add("|");
+                morse +="|";
            }
         }
 
-        foreach (string item in morseCode)
-        {
-            Console.Write(item);
-        }
+        Console.WriteLine(morse);
     }
 
     static public void Main(String[] args) 
