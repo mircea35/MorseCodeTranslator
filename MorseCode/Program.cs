@@ -48,9 +48,28 @@ class MorseCodeTranslator{
         return morse;
     }
 
-    //public string TranslateToText(string text){
+    public string TranslateToText(string morse){
+        string[] words = morse.Split(new char[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+        string text = "";
 
-    //}
+        foreach(string word in words){
+            string[] letters = word.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string letter in letters)
+            {
+                if (translationSet.ContainsValue(letter))
+                {
+                    text += translationSet.FirstOrDefault(x => x.Value == letter).Key;
+                }
+                else
+                {
+                    text += "?";
+                }
+            }
+            text += " ";
+        }
+
+        return text;
+    }
 }
 
 
@@ -91,6 +110,28 @@ internal class Program {
                     {
                         outputFile.WriteLine("Text: " + userInput + "\n Morse: " + translatedText);
                     }
+                    break;
+
+                case 2:
+                    Console.WriteLine("Choose the standard: ");
+                    Console.WriteLine("1. International");
+                    Console.WriteLine("2. American.");
+                    Console.WriteLine("Input: ");
+                    userChoice = Int32.Parse(Console.ReadLine());
+
+                    if(userChoice == 1){
+                        path = @"TranslationSets/international.txt";
+                    }else{
+                        path = @"TranslationSets/american.txt";
+                    }
+                    translator = new MorseCodeTranslator(path);
+                    Console.WriteLine("Input the line: ");
+                    userInput = Console.ReadLine();
+                    translatedText = translator.TranslateToText(userInput);
+                    Console.WriteLine(translatedText);
+                    
+                    Console.WriteLine("Morse: " + userInput + "\n Text: " + translatedText);
+
                     break;
             }
         }
