@@ -108,6 +108,34 @@ class MorseCodeTranslator
 
 internal class Program
 {
+    static private bool authenticate()
+    {
+        List<string> inputValues = new List<string>();
+
+        string storedName = "user";
+        string storedPassword = "password";
+        string input = "";
+
+        Console.WriteLine("Username: ");
+        input = Console.ReadLine();
+        inputValues.Add(input);
+
+        Console.WriteLine("Password: ");
+        input = Console.ReadLine();
+        inputValues.Add(input);
+
+        if (inputValues[0] == storedName && inputValues[1] == storedPassword)
+        {
+            Console.WriteLine("User authenticated!");
+            return false;
+        }
+        else if (inputValues[0] != storedName || inputValues[1] != storedPassword)
+        {
+            Console.WriteLine("Incorrect password or username.");
+            return true;
+        }
+        return true;
+    }
 
     static private void writeToFile(string input, string translated)
     {
@@ -132,9 +160,12 @@ internal class Program
     static public void Main(String[] args)
     {
         bool keepAlive = true;
+        bool authLoop = true;
         string userInput = "", translatedText = "";
         while (keepAlive)
         {
+            Console.WriteLine("=== Morse Code Translator - Authentication ===");
+            while (authenticate()) { }
             Console.WriteLine("=== Morse Code Translator - Initialising ===");
             MorseCodeTranslator translator = new MorseCodeTranslator();
             Console.Clear();
@@ -172,6 +203,5 @@ internal class Program
                     break;
             }
         }
-
     }
 }
