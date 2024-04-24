@@ -78,7 +78,7 @@ internal class Program {
     static public void Main(String[] args) 
     { 
         bool keepAlive = true;
-        string path = "";
+        string paths = "";
         while(keepAlive){
             Console.WriteLine("=== Morse Code Translator ===");
             Console.WriteLine("Main Menu");
@@ -97,11 +97,11 @@ internal class Program {
                     userChoice = Int32.Parse(Console.ReadLine());
 
                     if(userChoice == 1){
-                        path = @"TranslationSets/international.txt";
+                        paths = Path.Combine("TranslationSets", "international.txt");
                     }else{
-                        path = @"TranslationSets/american.txt";
+                        paths = Path.Combine("TranslationSets", "american.txt");
                     }
-                    MorseCodeTranslator translator = new MorseCodeTranslator(path);
+                    MorseCodeTranslator translator = new MorseCodeTranslator(paths);
                     Console.WriteLine("Input the line: ");
                     string userInput = Console.ReadLine();
                     string translatedText = translator.TranslateToMorse(userInput);
@@ -111,6 +111,10 @@ internal class Program {
                     {
                         outputFile.WriteLine("Text: " + userInput + "\n Morse: " + translatedText);
                     }
+
+                    Console.WriteLine("Press Enter To clear the screen once finished...");
+                    userInput = Console.ReadLine();
+                    Console.Clear();
                     break;
 
                 case 2:
@@ -121,11 +125,11 @@ internal class Program {
                     userChoice = Int32.Parse(Console.ReadLine());
 
                     if(userChoice == 1){
-                        path = @"TranslationSets/international.txt";
+                        paths = Path.Combine("TranslationSets", "international.txt");
                     }else{
-                        path = @"TranslationSets/american.txt";
+                        paths = Path.Combine("TranslationSets", "american.txt");
                     }
-                    translator = new MorseCodeTranslator(path);
+                    translator = new MorseCodeTranslator(paths);
                     Console.WriteLine("Input the line: ");
                     userInput = Console.ReadLine();
                     translatedText = translator.TranslateToText(userInput);
@@ -136,6 +140,9 @@ internal class Program {
                         outputFile.WriteLine("Morse: " + userInput + "\n Text: " + translatedText);
                     }
 
+                    Console.WriteLine("Press Enter To clear the screen once finished...");
+                    userInput = Console.ReadLine();
+                    Console.Clear();
                     break;
                 
                 default:
