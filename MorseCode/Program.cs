@@ -12,19 +12,22 @@ class MorseCodeTranslator
     {
         string paths = "";
         Console.WriteLine("Choose the standard: ");
-        Console.WriteLine("1. International");
+        Console.WriteLine("1. International.");
         Console.WriteLine("2. American.");
         Console.WriteLine("Input: ");
         int userChoice = Int32.Parse(Console.ReadLine());
 
-        if (userChoice == 1)
+        switch (userChoice)
         {
-            paths = Path.Combine("TranslationSets", "international.txt");
+            case 1:
+                paths = Path.Combine("TranslationSets", "international.txt");
+                break;
+
+            default:
+                paths = Path.Combine("TranslationSets", "american.txt");
+                break;
         }
-        else
-        {
-            paths = Path.Combine("TranslationSets", "american.txt");
-        }
+
         LoadMorseCode(paths);
     }
 
@@ -118,14 +121,24 @@ internal class Program
         }
     }
 
+    static private void closingOperation(string input, string translated)
+    {
+        Console.WriteLine(translated);
+        Console.WriteLine("Press Enter To clear the screen once finished...");
+        input = Console.ReadLine();
+        Console.Clear();
+    }
+
     static public void Main(String[] args)
     {
         bool keepAlive = true;
-        string paths = "";
+        string userInput = "", translatedText = "";
         while (keepAlive)
         {
-            Console.WriteLine("=== Morse Code Translator ===");
-            Console.WriteLine("Main Menu");
+            Console.WriteLine("=== Morse Code Translator - Initialising ===");
+            MorseCodeTranslator translator = new MorseCodeTranslator();
+            Console.Clear();
+            Console.WriteLine("=== Morse Code Translator - Main Menu ===");
             Console.WriteLine("Choose from the following: ");
             Console.WriteLine("1. Encoding to morse code.");
             Console.WriteLine("2. Decoding from morse code.");
@@ -135,32 +148,23 @@ internal class Program
             switch (userChoice)
             {
                 case 1:
-                    MorseCodeTranslator translator = new MorseCodeTranslator();
-
                     Console.WriteLine("Input the line: ");
-                    string userInput = Console.ReadLine();
-                    string translatedText = translator.TranslateToMorse(userInput);
-                    Console.WriteLine(translatedText);
 
-                    writeToFile(userInput,translatedText);
-
-                    Console.WriteLine("Press Enter To clear the screen once finished...");
                     userInput = Console.ReadLine();
-                    Console.Clear();
+                    translatedText = translator.TranslateToMorse(userInput);
+
+                    writeToFile(userInput, translatedText);
+                    closingOperation(userInput, translatedText);
                     break;
 
                 case 2:
-                    translator = new MorseCodeTranslator();
-
                     Console.WriteLine("Input the line: ");
+
                     userInput = Console.ReadLine();
                     translatedText = translator.TranslateToText(userInput);
 
-                    writeToFile(userInput,translatedText);
-                    
-                    Console.WriteLine("Press Enter To clear the screen once finished...");
-                    userInput = Console.ReadLine();
-                    Console.Clear();
+                    writeToFile(userInput, translatedText);
+                    closingOperation(userInput, translatedText);
                     break;
 
                 default:
