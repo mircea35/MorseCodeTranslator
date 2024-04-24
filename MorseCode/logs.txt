@@ -1,2 +1,0 @@
-Morse: - ···· ·· ··· |·· ··· |·- |- · ··· - 
- Text: THIS IS A TEST 

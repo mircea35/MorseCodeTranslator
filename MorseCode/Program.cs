@@ -4,55 +4,85 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-class MorseCodeTranslator{
+class MorseCodeTranslator
+{
     Dictionary<String, String> translationSet = new Dictionary<String, String>();
-    
-    public MorseCodeTranslator(string path)
+
+    public MorseCodeTranslator()
     {
-        LoadMorseCode(path);
+        string paths = "";
+        Console.WriteLine("Choose the standard: ");
+        Console.WriteLine("1. International");
+        Console.WriteLine("2. American.");
+        Console.WriteLine("Input: ");
+        int userChoice = Int32.Parse(Console.ReadLine());
+
+        if (userChoice == 1)
+        {
+            paths = Path.Combine("TranslationSets", "international.txt");
+        }
+        else
+        {
+            paths = Path.Combine("TranslationSets", "american.txt");
+        }
+        LoadMorseCode(paths);
     }
 
-    private void LoadMorseCode(string path){
-        try{
-            foreach(String line in File.ReadLines(path)){
-                if(String.IsNullOrEmpty(line) || line.StartsWith("#")){
+    private void LoadMorseCode(string path)
+    {
+        try
+        {
+            foreach (String line in File.ReadLines(path))
+            {
+                if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                {
                     continue;
                 }
-                else{
+                else
+                {
                     string[] characters = line.Split(" ");
                     translationSet.Add(characters[0], characters[1]);
                 }
             }
         }
-        catch{
+        catch
+        {
             Console.WriteLine("Importing the Translation set failed. Check if you have the files in the TranslationSets folder/directory.");
         }
     }
 
-    public string TranslateToMorse(string text){
+    public string TranslateToMorse(string text)
+    {
         text = text.ToUpper();
         char[] characters = new char[text.Length];
         string morse = "";
-        for(int i = 0; i < text.Length; i++){
-             characters[i] = text[i];
+        for (int i = 0; i < text.Length; i++)
+        {
+            characters[i] = text[i];
         }
 
-        foreach(char c in characters){
-            if(translationSet.ContainsKey(c.ToString())){
-                    morse += translationSet[c.ToString()] + " ";
-            }else{
-                    morse +="|";
+        foreach (char c in characters)
+        {
+            if (translationSet.ContainsKey(c.ToString()))
+            {
+                morse += translationSet[c.ToString()] + " ";
+            }
+            else
+            {
+                morse += "|";
             }
         }
 
         return morse;
     }
 
-    public string TranslateToText(string morse){
-        string[] words = morse.Split(new char[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+    public string TranslateToText(string morse)
+    {
+        string[] words = morse.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
         string text = "";
 
-        foreach(string word in words){
+        foreach (string word in words)
+        {
             string[] letters = word.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string letter in letters)
             {
@@ -73,13 +103,27 @@ class MorseCodeTranslator{
 }
 
 
-internal class Program { 
+internal class Program
+{
 
-    static public void Main(String[] args) 
-    { 
+    static private void writeToFile(string input, string translated)
+    {
+        string currentDateTime = DateTime.Now.ToString();
+        currentDateTime = currentDateTime.Replace('/', '-');
+        currentDateTime = currentDateTime.Replace(' ', '_');
+
+        using (StreamWriter outputFile = new StreamWriter(Path.Combine("logs", $"{currentDateTime}.txt")))
+        {
+            outputFile.WriteLine("Text: " + input + "\n Morse: " + translated);
+        }
+    }
+
+    static public void Main(String[] args)
+    {
         bool keepAlive = true;
         string paths = "";
-        while(keepAlive){
+        while (keepAlive)
+        {
             Console.WriteLine("=== Morse Code Translator ===");
             Console.WriteLine("Main Menu");
             Console.WriteLine("Choose from the following: ");
@@ -88,29 +132,17 @@ internal class Program {
             Console.WriteLine("3. Quit.");
             Console.WriteLine("Input: ");
             int userChoice = Int32.Parse(Console.ReadLine());
-            switch(userChoice){
+            switch (userChoice)
+            {
                 case 1:
-                    Console.WriteLine("Choose the standard: ");
-                    Console.WriteLine("1. International");
-                    Console.WriteLine("2. American.");
-                    Console.WriteLine("Input: ");
-                    userChoice = Int32.Parse(Console.ReadLine());
+                    MorseCodeTranslator translator = new MorseCodeTranslator();
 
-                    if(userChoice == 1){
-                        paths = Path.Combine("TranslationSets", "international.txt");
-                    }else{
-                        paths = Path.Combine("TranslationSets", "american.txt");
-                    }
-                    MorseCodeTranslator translator = new MorseCodeTranslator(paths);
                     Console.WriteLine("Input the line: ");
                     string userInput = Console.ReadLine();
                     string translatedText = translator.TranslateToMorse(userInput);
                     Console.WriteLine(translatedText);
 
-                    using (StreamWriter outputFile = new StreamWriter("logs.txt"))
-                    {
-                        outputFile.WriteLine("Text: " + userInput + "\n Morse: " + translatedText);
-                    }
+                    writeToFile(userInput,translatedText);
 
                     Console.WriteLine("Press Enter To clear the screen once finished...");
                     userInput = Console.ReadLine();
@@ -118,33 +150,19 @@ internal class Program {
                     break;
 
                 case 2:
-                    Console.WriteLine("Choose the standard: ");
-                    Console.WriteLine("1. International");
-                    Console.WriteLine("2. American.");
-                    Console.WriteLine("Input: ");
-                    userChoice = Int32.Parse(Console.ReadLine());
+                    translator = new MorseCodeTranslator();
 
-                    if(userChoice == 1){
-                        paths = Path.Combine("TranslationSets", "international.txt");
-                    }else{
-                        paths = Path.Combine("TranslationSets", "american.txt");
-                    }
-                    translator = new MorseCodeTranslator(paths);
                     Console.WriteLine("Input the line: ");
                     userInput = Console.ReadLine();
                     translatedText = translator.TranslateToText(userInput);
-                    Console.WriteLine(translatedText);
-                    
-                    using (StreamWriter outputFile = new StreamWriter("logs.txt"))
-                    {
-                        outputFile.WriteLine("Morse: " + userInput + "\n Text: " + translatedText);
-                    }
 
+                    writeToFile(userInput,translatedText);
+                    
                     Console.WriteLine("Press Enter To clear the screen once finished...");
                     userInput = Console.ReadLine();
                     Console.Clear();
                     break;
-                
+
                 default:
                     keepAlive = false;
                     break;
