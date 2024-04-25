@@ -1,11 +1,36 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "Crypto.AES/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Crypto.AES.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Crypto.AES.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Crypto.AES/1.0.4": {
+      "sha512": "IvwEBGbwAtlP8iDFhmKDewN4VaIiHDSNSHw7e9U3vqYoN6NxuItMq6raYj0UZKZStrgSdifYbwFYnYrCEd+4yw==",
+      "type": "package",
+      "path": "crypto.aes/1.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "crypto.aes.1.0.4.nupkg.sha512",
+        "crypto.aes.nuspec",
+        "lib/netstandard2.0/Crypto.AES.dll"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "Crypto.AES >= 1.0.4"
+    ]
   },
   "packageFolders": {
     "/home/mircea/.nuget/packages/": {}
@@ -13,11 +38,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/MorseCode.csproj",
+      "projectUniqueName": "/home/mircea/Documents/MorseCodeTranslator/MorseCode/MorseCode.csproj",
       "projectName": "MorseCode",
-      "projectPath": "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/MorseCode.csproj",
+      "projectPath": "/home/mircea/Documents/MorseCodeTranslator/MorseCode/MorseCode.csproj",
       "packagesPath": "/home/mircea/.nuget/packages/",
-      "outputPath": "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/obj/",
+      "outputPath": "/home/mircea/Documents/MorseCodeTranslator/MorseCode/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/mircea/.nuget/NuGet/NuGet.Config"
@@ -43,6 +68,12 @@
     "frameworks": {
       "net7.0": {
         "targetAlias": "net7.0",
+        "dependencies": {
+          "Crypto.AES": {
+            "target": "Package",
+            "version": "[1.0.4, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
