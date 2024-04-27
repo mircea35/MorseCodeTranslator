@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZpZM5Nj3tfUwjmwPqN2KadM5RZLSWrN5ij+I/tjeWMLrqJ8buV1zPcJp39wIexqKP0FC6gWzaBFX23q3TNUlJQ==",
+  "dgSpecHash": "jDPwVT/pKLRcAFZOnf+9A6ehtZc5h7thUNK/hsLdOwTTUs6ycxDCeaVrdSEDCHbaX30Fc81cxdntnRe/y9YaHQ==",
   "success": true,
-  "projectFilePath": "/home/mircea/Documents/MorseCodeTranslator/MorseCode/MorseCode.csproj",
+  "projectFilePath": "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/MorseCode.csproj",
   "expectedPackageFiles": [
     "/home/mircea/.nuget/packages/crypto.aes/1.0.4/crypto.aes.1.0.4.nupkg.sha512"
   ],

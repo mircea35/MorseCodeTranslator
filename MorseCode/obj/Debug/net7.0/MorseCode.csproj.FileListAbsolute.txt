@@ -28,3 +28,5 @@
 /home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/obj/Debug/net7.0/MorseCode.pdb
 /home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/obj/Debug/net7.0/MorseCode.genruntimeconfig.cache
 /home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/obj/Debug/net7.0/ref/MorseCode.dll
+/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/bin/Debug/net7.0/Crypto.AES.dll
+/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/obj/Debug/net7.0/MorseCode.csproj.CopyComplete

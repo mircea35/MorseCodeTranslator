@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/mircea/Documents/MorseCodeTranslator/MorseCode/MorseCode.csproj": {}
+    "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/MorseCode.csproj": {}
   },
   "projects": {
-    "/home/mircea/Documents/MorseCodeTranslator/MorseCode/MorseCode.csproj": {
+    "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/MorseCode.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mircea/Documents/MorseCodeTranslator/MorseCode/MorseCode.csproj",
+        "projectUniqueName": "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/MorseCode.csproj",
         "projectName": "MorseCode",
-        "projectPath": "/home/mircea/Documents/MorseCodeTranslator/MorseCode/MorseCode.csproj",
+        "projectPath": "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/MorseCode.csproj",
         "packagesPath": "/home/mircea/.nuget/packages/",
-        "outputPath": "/home/mircea/Documents/MorseCodeTranslator/MorseCode/obj/",
+        "outputPath": "/home/mircea/Documents/Github/MorseCodeTranslator/MorseCode/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mircea/.nuget/NuGet/NuGet.Config"

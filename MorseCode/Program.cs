@@ -224,6 +224,33 @@ class MorseCodeTranslator
     }
 }
 
+class GZIP
+{
+    public static byte[] Compress(byte[] buffer)
+    {
+        using var memStream = new MemoryStream();
+
+        using (var gZipStream = new GZipStream(memStream, CompressionMode.Compress, true))
+        {
+            gZipStream.Write(buffer, 0, buffer.Length);
+        }
+
+        return memStream.ToArray();
+    }
+
+    public static byte[] Decompress(byte[] compressedData)
+    {
+        using var memStream = new MemoryStream(compressedData);
+
+        using var gZipStream = new GZipStream(memStream, CompressionMode.Decompress);
+
+        using var resultStream = new MemoryStream();
+
+        gZipStream.CopyTo(resultStream);
+
+        return resultStream.ToArray();
+    }
+}
 
 internal class Program
 {
@@ -268,6 +295,16 @@ internal class Program
         }
     }
 
+    static private string validateInput(string input)
+    {
+        while (input == "")
+        {
+            Console.WriteLine("Input the line: ");
+            input = Console.ReadLine();
+        }
+        return input;
+    }
+
     static private void closingOperation(string input, string translated)
     {
         Console.WriteLine(translated);
@@ -280,7 +317,7 @@ internal class Program
     {
         bool keepAlive = true;
         bool authLoop = true;
-        string userInput = "", translatedText = "";
+        string userInput = "", translatedText = "", key = "";
         while (keepAlive)
         {
             Console.WriteLine("=== Morse Code Translator - Authentication ===");
@@ -290,17 +327,18 @@ internal class Program
             Console.Clear();
             Console.WriteLine("=== Morse Code Translator - Main Menu ===");
             Console.WriteLine("Choose from the following: ");
-            Console.WriteLine("1. Encoding to morse code.");
-            Console.WriteLine("2. Decoding from morse code.");
+            Console.WriteLine("1. Plaintext - Encoding to morse code.");
+            Console.WriteLine("2. Plaintext - Decoding from morse code.");
+            Console.WriteLine("3. Ecrypted (AES) - Encoding to morse code.");
+            Console.WriteLine("4. Ecrypted (AES) - Decoding from morse code.");
             Console.WriteLine("3. Quit.");
             Console.WriteLine("Input: ");
             int userChoice = Int32.Parse(Console.ReadLine());
             switch (userChoice)
             {
                 case 1:
-                    Console.WriteLine("Input the line: ");
+                    validateInput(userInput);
 
-                    userInput = Console.ReadLine();
                     translatedText = translator.TranslateToMorse(userInput);
 
                     writeToFile(userInput, translatedText);
@@ -308,12 +346,46 @@ internal class Program
                     break;
 
                 case 2:
-                    Console.WriteLine("Input the line: ");
+                    validateInput(userInput);
 
-                    userInput = Console.ReadLine();
                     translatedText = translator.TranslateToText(userInput);
 
                     writeToFile(userInput, translatedText);
+                    closingOperation(userInput, translatedText);
+                    break;
+
+                case 3:
+                    validateInput(userInput);
+
+                    while (key == "")
+                    {
+                        Console.WriteLine("Input the key: ");
+                        key = Console.ReadLine();
+                    }
+
+                    translatedText = translator.TranslateToMorse(userInput);
+                    byte[] rawInputBytes = Encoding.UTF8.GetBytes(translatedText);
+                    byte[] compressedData = GZIP.Compress(rawInputBytes);
+                    byte[] encryptedData = AES.EncryptBytes(key, compressedData);
+                    writeToFile("ENCRYPTED", Convert.ToBase64String(encryptedData));
+
+                    closingOperation(userInput, translatedText);
+                    break;
+
+                case 4:
+                    validateInput(userInput);
+
+                    while (key == "")
+                    {
+                        Console.WriteLine("Input the key: ");
+                        key = Console.ReadLine();
+                    }
+
+                    rawInputBytes = Encoding.UTF8.GetBytes(userInput);
+                    byte[] decryprtedData = AES.DecryptBytes(key, rawInputBytes);
+
+                    Console.WriteLine(Encoding.UTF8.GetString(decryprtedData));
+                    translatedText = translator.TranslateToText(Encoding.UTF8.GetString(decryprtedData));
                     closingOperation(userInput, translatedText);
                     break;
 
