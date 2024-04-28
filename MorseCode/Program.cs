@@ -337,21 +337,31 @@ internal class Program
             switch (userChoice)
             {
                 case 1:
-                    validateInput(userInput);
+                    while (userInput == "")
+                    {
+                        Console.WriteLine("Input the line: ");
+                        userInput = Console.ReadLine();
+                    }
 
                     translatedText = translator.TranslateToMorse(userInput);
 
                     writeToFile(userInput, translatedText);
                     closingOperation(userInput, translatedText);
+                    userInput = "";
                     break;
 
                 case 2:
-                    validateInput(userInput);
+                    while (userInput == "")
+                    {
+                        Console.WriteLine("Input the line: ");
+                        userInput = Console.ReadLine();
+                    }
 
                     translatedText = translator.TranslateToText(userInput);
 
                     writeToFile(userInput, translatedText);
                     closingOperation(userInput, translatedText);
+                    userInput = "";
                     break;
 
                 case 3:
