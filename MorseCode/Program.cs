@@ -127,6 +127,8 @@ class MorseCodeTranslator
 {
     Dictionary<String, String> translationSet = new Dictionary<String, String>();
 
+    //This would be called whilst instanciated to make sure a standard is selected by the user.
+    //If no standard is selected or the input is incorrect, it will automatically choose the american format.
     public MorseCodeTranslator()
     {
         string paths = "";
@@ -150,6 +152,7 @@ class MorseCodeTranslator
         LoadMorseCode(paths);
     }
 
+    //This method would be called at the end of the initialisation process as it would load each character from the specified file into the dictionary translationSet.
     private void LoadMorseCode(string path)
     {
         try
@@ -173,8 +176,10 @@ class MorseCodeTranslator
         }
     }
 
+    //This method is used by the program to encode a given string of text (the parameter) into the specified morse code standard selected at the init process.
     public string TranslateToMorse(string text)
     {
+        //transforms the text to upper to prevent issues as the file only having the uppercase variant of the specified characters.
         text = text.ToUpper();
         char[] characters = new char[text.Length];
         string morse = "";
@@ -198,6 +203,7 @@ class MorseCodeTranslator
         return morse;
     }
 
+    //This method is used by the program to decode a given string of morse code (the parameter) into English using the standard selected at the init process.
     public string TranslateToText(string morse)
     {
         string[] words = morse.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -254,6 +260,7 @@ class GZIP
 
 internal class Program
 {
+    //This method is used as a very simple way of logging in and preventing unauthorised access to the program. The program is using a hardcoded username and password at the moment.
     static private bool authenticate()
     {
         List<string> inputValues = new List<string>();
@@ -283,6 +290,7 @@ internal class Program
         return true;
     }
 
+    //This method is used for writing the console output into a .txt file with the exact date and time of the system.
     static private void writeToFile(string input, string translated)
     {
         string currentDateTime = DateTime.Now.ToString();
@@ -295,16 +303,7 @@ internal class Program
         }
     }
 
-    static private string validateInput(string input)
-    {
-        while (input == "")
-        {
-            Console.WriteLine("Input the line: ");
-            input = Console.ReadLine();
-        }
-        return input;
-    }
-
+    //This method is used for conducting the last bits needed for every stage. This was done this way to ensure make sure less code is repeated within the program.
     static private void closingOperation(string input, string translated)
     {
         Console.WriteLine(translated);
