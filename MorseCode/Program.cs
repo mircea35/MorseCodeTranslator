@@ -355,7 +355,11 @@ internal class Program
                     break;
 
                 case 3:
-                    validateInput(userInput);
+                    while (userInput == "")
+                    {
+                        Console.WriteLine("Input the line: ");
+                        userInput = Console.ReadLine();
+                    }
 
                     while (key == "")
                     {
@@ -367,13 +371,19 @@ internal class Program
                     byte[] rawInputBytes = Encoding.UTF8.GetBytes(translatedText);
                     byte[] compressedData = GZIP.Compress(rawInputBytes);
                     byte[] encryptedData = AES.EncryptBytes(key, compressedData);
-                    writeToFile("ENCRYPTED", Convert.ToBase64String(encryptedData));
-
+                    writeToFile("ENCRYPTED", Encoding.UTF32.GetString(encryptedData, 0, encryptedData.Length));
                     closingOperation(userInput, translatedText);
+                    userInput = "";
+                    key = "";
+
                     break;
 
                 case 4:
-                    validateInput(userInput);
+                    while (userInput == "")
+                    {
+                        Console.WriteLine("Input the line: ");
+                        userInput = Console.ReadLine();
+                    }
 
                     while (key == "")
                     {
@@ -387,6 +397,8 @@ internal class Program
                     Console.WriteLine(Encoding.UTF8.GetString(decryprtedData));
                     translatedText = translator.TranslateToText(Encoding.UTF8.GetString(decryprtedData));
                     closingOperation(userInput, translatedText);
+                    userInput = "";
+                    key = "";
                     break;
 
                 default:
